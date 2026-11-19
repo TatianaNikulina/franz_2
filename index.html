@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#161826">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Neue Wörter 2">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23161826'/%3E%3Ctext x='50' y='66' font-family='Arial' font-size='46' font-weight='700' fill='%239184d9' text-anchor='middle'%3EFR%3C/text%3E%3C/svg%3E">
+<title>Französisch · Neue Wörter 2</title>
+<style>
+:root{--bg:#161826;--card:#20233a;--card2:#2a2e4a;--text:#e9e9ed;--mute:#9397ab;--line:#3a3f5c;--accent:#9184d9;--accent-l:#d2cefd;--accent-m:#b5abfc;--accent-d:#423a6a;--bad:#75798c;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text)}
+body{font-family:ui-rounded,"SF Pro Rounded",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%;
+  background:radial-gradient(900px 500px at 0% 0%,#2b2741,transparent 70%),var(--bg);min-height:100vh;
+  padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0)}
+#app{max-width:760px;margin:0 auto;padding:28px 20px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3,h6{margin:0;font-weight:600}
+h1{font-size:clamp(30px,7vw,44px);letter-spacing:-.02em;line-height:1.1}
+h2{font-size:28px;letter-spacing:-.01em}
+h3{font-size:22px}
+h6{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+h6.acc{color:var(--accent-m)}
+p{margin:0}
+.mute{color:var(--mute)}
+.col{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.card{background:var(--card);border-radius:14px;padding:20px;box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 6px 18px rgba(0,0,0,.25)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+button{font:inherit;color:inherit;cursor:pointer}
+.btn{border:1px solid var(--line);background:var(--card2);color:var(--text);border-radius:10px;padding:10px 16px;min-height:44px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--accent)}
+.btn:active{transform:translateY(1px)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#14112a;font-weight:600}
+.btn.pri:hover{background:var(--accent-m)}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--accent-l)}
+.btn.ghost:hover{border-color:var(--line)}
+.btn.sel{background:var(--accent);border-color:var(--accent);color:#14112a;font-weight:600}
+.btn.key{min-width:42px;padding:6px 10px;min-height:42px;font-size:18px}
+.input{font:inherit;font-size:20px;color:var(--text);background:#12142a;border:1px solid var(--line);border-radius:10px;padding:10px 14px;min-height:46px;width:100%;max-width:100%}
+.input:focus{outline:2px solid var(--accent);outline-offset:1px}
+.input.sm{width:min(240px,100%)}
+.input:disabled{opacity:.6}
+.hint{font-size:13px;color:var(--mute)}
+.top{display:flex;align-items:center;gap:14px}
+.prog{flex:1;height:4px;border-radius:2px;background:#3f424d}
+.prog i{display:block;height:4px;border-radius:2px;background:var(--accent);transition:width .25s}
+.main{font-size:clamp(24px,5.5vw,32px);line-height:1.25;font-weight:600;letter-spacing:-.015em}
+.sent{display:flex;align-items:center;flex-wrap:wrap;gap:10px;font-size:22px;line-height:1.5}
+.fb{display:flex;align-items:center;gap:14px;padding:12px 18px;border-radius:12px;background:var(--card)}
+.fb .ic{font-size:26px;line-height:1}
+.bars{display:flex;gap:32px;align-items:flex-end;margin-top:8px}
+.bar{position:relative;width:96px;display:flex;flex-direction:column;gap:6px;cursor:pointer}
+.bar .n{font-size:22px;font-weight:600}
+.bar .b{min-height:3px;border-radius:6px;transition:height .25s}
+.bar .l{font-size:13px;color:var(--mute)}
+.pop{display:none;position:absolute;left:0;bottom:calc(100% + 8px);z-index:5;min-width:190px;max-width:300px;max-height:220px;overflow:auto;padding:12px 16px;flex-direction:column;gap:4px;font-size:14px;background:var(--card2);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.pop.on,.bar:hover .pop{display:flex}
+.score{font-size:72px;line-height:1;font-weight:600;color:var(--accent)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+th{color:var(--mute);font-weight:500;font-size:13px}
+.tag{display:inline-block;padding:2px 12px;border-radius:99px;background:var(--accent-d);color:var(--accent-l);font-size:14px}
+.sp{height:1px;width:240px;background:linear-gradient(90deg,var(--accent),transparent)}
+.mr{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:6px 0;border-bottom:1px solid var(--line)}
+.mr span:last-child{color:var(--accent-l)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const KEY = 'franzoesisch-neue-woerter-2-v1';
+const V = [
+["a", "Londres", "London", "", "", "", []],
+["a", "européen/européenne", "europäisch", "une ville {européenne}", "eine europäische Stadt", "un pays européen: ein europäisches Land", ["européen", "européenne"]],
+["a", "une culture", "eine Kultur", "Lille a été capitale européenne de la {culture} en 2004.", "Lille war 2004 europäische Kulturhauptstadt.", "", []],
+["a", "un point commun", "eine Gemeinsamkeit", "", "", "↔ une différence", []],
+["a", "la Méditerranée", "das Mittelmeer", "Marseille est une ville au bord de la {Méditerranée}.", "Marseille ist eine Stadt am Mittelmeer.", "", []],
+["a", "la région PACA (Provence-Alpes-Côte d’Azur)", "Region im Südosten Frankreichs", "", "", "", []],
+["a", "ancien/ancienne", "alt", "Marseille est la plus {ancienne} ville de France.", "Marseille ist die älteste Stadt Frankreichs.", "", ["ancien", "ancienne"]],
+["a", "vivant/vivante", "lebendig; lebhaft", "", "", "→ vivre, la vie", ["vivant", "vivante"]],
+["a", "un savon", "eine Seife", "le {savon} de Marseille", "", "besonders verträgliche Naturseife", []],
+["a", "une calanque", "eine Felsbucht", "Ce week-end, on va visiter les {calanques} de Marseille.", "Dieses Wochenende werden wir die Felsbuchten von Marseille besuchen.", "", []],
+["a", "une bouillabaisse", "provenzalische Fischsuppe", "", "", "", []],
+["a", "Francfort", "Frankfurt (am Main)", "", "", "", []],
+["a", "un marché aux puces", "ein Flohmarkt", "", "", "", []],
+["a", "être en train de faire qc", "gerade etw. tun", "", "", "", []],
+["a", "une bonne affaire", "ein Schnäppchen", "J’ai fait {une bonne affaire} au marché aux puces.", "Ich habe ein Schnäppchen auf dem Flohmarkt gemacht.", "", []],
+["a", "une folie", "ein Wahnsinn", "C’est {la folie} !", "Das ist der Wahnsinn!", "", []],
+["a", "un Anglais/une Anglaise", "ein Engländer/eine Engländerin", "", "", "", ["un Anglais", "une Anglaise"]],
+["a", "venir de faire qc", "gerade etw. getan haben", "Les touristes {viennent d’arriver} à Lille.", "Die Touristen sind gerade in Lille angekommen.", "", []],
+["a", "mauvais/mauvaise", "hier: falsch", "C’est la {mauvaise} réponse.", "Das ist die falsche Antwort.", "↔ bon/bonne", ["mauvais", "mauvaise"]],
+["a", "comme", "da", "", "", "", []],
+["a", "vide", "leer", "La bouteille est {vide}.", "Die Flasche ist leer.", "männlich und weiblich gleich: vide/vide", []],
+["a", "surveiller qn/qc", "jdn./etw. überwachen", "Sami {surveille} la montagne de moules.", "Sami überwacht den Muschelberg.", "", []],
+["a", "un job (fam.)", "ein Job (ugs.)", "", "", "", []],
+["a", "un étudiant/une étudiante", "ein Student/eine Studentin", "", "", "", ["un étudiant", "une étudiante"]]
+];
+
+const WORDS = V.map(([u, fr, de, ex, exde, note, alt]) => { const m = (ex || '').match(/\{(.+?)\}/); return { u, fr, de, ex: ex ? ex.replace(/[{}]/g, '') : '', exde: exde || '', note: note || '', alt: alt || [], gap: m ? m[1] : null, before: m ? ex.slice(0, m.index) : '', after: m ? ex.slice(m.index + m[0].length) : '' }; });
+const CHARS = ['é', 'è', 'ê', 'ë', 'à', 'â', 'ç', 'î', 'ï', 'ô', 'œ', 'ù', 'û'];
+const MODES = ['type', 'sent', 'fill'];
+const MODE = {
+  type: { name: 'Wort', title: 'Französisches Wort', desc: 'Das deutsche Wort steht da. Schreibe das französische Wort.', hint: 'Der Artikel (un, une, le, la) gehört dazu. Ein falscher Buchstabe zählt als Fehler.' },
+  sent: { name: 'Satz', title: 'Französischer Satz', desc: 'Der deutsche Satz steht da. Schreibe den französischen Satz.', hint: 'Ein falscher Buchstabe zählt als Fehler. Punkt und Leerzeichen vor ! und ? sind egal.' },
+  fill: { name: 'Lücke', title: 'Lückensatz', desc: 'Ein französischer Satz mit einer Lücke. Schreibe das fehlende Wort.', hint: 'Achte auf die richtige Form im Satz. Ein falscher Buchstabe zählt als Fehler.' }
+};
+
+const shuf = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const wn = s => s.toLowerCase().replace(/[’‘`´]/g, "'").replace(/\(.*?\)/g, '').replace(/\bq[nc]\/q[nc]\b/g, '').replace(/\bq[nc]\b/g, '').replace(/\.\.\.|…/g, ' ').replace(/[.!?,;:]/g, '').replace(/\s+/g, ' ').trim();
+const wAns = (w, fmt) => (fmt === 'fill' && w.gap ? [w.gap] : [w.fr].concat(w.alt)).map(wn).filter(Boolean);
+const keyOf = (fmt, w) => (fmt === 'type' ? '' : fmt + '|') + w.fr;
+const acc = r => { const n = r.ok + r.bad; return n ? Math.round(r.ok / n * 100) + ' %' : '–'; };
+
+function load() { try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && s.words) return s; } catch (e) {} return { words: {}, hist: [] }; }
+function persist() { try { localStorage.setItem(KEY, JSON.stringify(S.store)); } catch (e) {} }
+const S = { screen: 'home', fmt: 'type', n: 10, sess: null, open: null, store: load() };
+
+function pool(fmt) { return WORDS.filter(x => fmt === 'type' ? true : fmt === 'sent' ? (x.ex && x.exde) : !!x.gap); }
+function errItems() {
+  return [].concat(...MODES.map(f => pool(f).filter(w => { const r = S.store.words[keyOf(f, w)]; return r && r.last === 0; }).map(w => ({ w, fmt: f }))));
+}
+function go(screen) { S.screen = screen; S.open = null; if (screen !== 'play' && screen !== 'result') S.sess = null; render(); window.scrollTo(0, 0); }
+function begin(items, label, src) {
+  if (!items.length) return;
+  S.sess = { items, i: 0, checked: false, ok: null, val: null, log: [], label, src };
+  go('play');
+}
+function startMode(fmt) {
+  fmt = fmt || S.fmt;
+  const st = S.store.words;
+  const pr = w => { const r = st[keyOf(fmt, w)]; return !r ? 1 : r.last === 0 ? 0 : 2; };
+  const items = shuf(pool(fmt)).sort((a, b) => pr(a) - pr(b)).slice(0, S.n >= 999 ? 999 : S.n).map(w => ({ w, fmt }));
+  begin(items, MODE[fmt].title, fmt);
+}
+function startErr() { begin(shuf(errItems()), 'Fehler wiederholen', 'err'); }
+function record(key, ok) {
+  const r = S.store.words[key] || (S.store.words[key] = { ok: 0, bad: 0, last: 1 });
+  ok ? r.ok++ : r.bad++; r.last = ok ? 1 : 0; persist();
+}
+function finish() {
+  const s = S.sess; const ok = s.log.filter(x => x.ok).length;
+  S.store.hist = [{ t: Date.now(), label: s.label, ok, n: s.log.length }].concat(S.store.hist).slice(0, 30); persist();
+  go('result');
+}
+function judge(cur, val) {
+  const v = wn(val); if (!v) return false;
+  if (cur.fmt === 'sent') return v === wn(cur.w.ex);
+  return wAns(cur.w, cur.fmt).includes(v);
+}
+function check() {
+  const s = S.sess; if (!s || s.checked) return;
+  const el = document.getElementById('ans'); if (!el || !el.value.trim()) return;
+  const cur = s.items[s.i]; const ok = judge(cur, el.value);
+  record(keyOf(cur.fmt, cur.w), ok);
+  s.log.push({ ok, w: cur.w, fmt: cur.fmt }); s.checked = true; s.ok = ok; s.val = el.value; render();
+}
+function next() {
+  const s = S.sess; const i = s.i + 1;
+  if (i >= s.items.length) return finish();
+  s.i = i; s.checked = false; s.ok = null; s.val = null; render();
+}
+function retry() {
+  const s = S.sess; const bad = s.log.filter(x => !x.ok).map(x => ({ w: x.w, fmt: x.fmt }));
+  begin(bad, 'Fehler wiederholen', s.src);
+}
+
+/* ---------- views ---------- */
+const btn = (a, v, label, cls) => '<button class="btn ' + (cls || '') + '" data-a="' + a + '"' + (v !== undefined ? ' data-v="' + esc(v) + '"' : '') + '>' + label + '</button>';
+const promptOf = x => x.fmt === 'sent' ? x.w.exde : x.w.de;
+const answerOf = x => x.fmt === 'sent' ? x.w.ex : x.fmt === 'fill' && x.w.gap ? x.w.gap : x.w.fr;
+
+function vHome() {
+  const errN = errItems().length;
+  const icons = { type: '✍️', sent: '💬', fill: '🧩' };
+  return '<div class="col" style="gap:28px">' +
+    '<div class="col" style="gap:8px;padding-top:20px"><h6 class="acc">Französisch · Neue Wörter 2</h6><h1>Bonjour Anechka,</h1><div class="sp" style="margin-top:12px"></div></div>' +
+    '<div class="grid">' + MODES.map(f => '<div class="card col" style="align-items:flex-start;padding:24px;gap:12px"><span style="font-size:28px;line-height:1">' + icons[f] + '</span><h3>' + MODE[f].title + '</h3><p class="mute" style="font-size:15px">' + MODE[f].desc + '</p><p class="hint">' + pool(f).length + ' Aufgaben</p>' + btn('setup', f, 'Üben →', 'pri') + '</div>').join('') + '</div>' +
+    '<div class="row">' + (errN ? btn('start-err', undefined, '↺ ' + errN + ' Fehler wiederholen') : '') + btn('parent', undefined, '📊 Elternbereich', 'ghost') + '</div></div>';
+}
+function vSetup() {
+  const total = pool(S.fmt).length;
+  const counts = [5, 10].filter(n => n < total).concat(999);
+  const cur = S.n >= 999 || S.n >= total ? 999 : S.n;
+  return '<div class="col" style="gap:24px;padding-top:8px">' + btn('home', undefined, '← Zurück', 'ghost') + '<h2>Üben</h2>' +
+    '<div class="col" style="gap:10px"><h6>Aufgabenform</h6><div class="row">' + MODES.map(f => btn('fmt', f, MODE[f].name, S.fmt === f ? 'sel' : '')).join('') + '</div><p class="hint">' + MODE[S.fmt].desc + ' ' + MODE[S.fmt].hint + '</p></div>' +
+    '<div class="col" style="gap:10px"><h6>Aufgaben pro Runde</h6><div class="row">' + counts.map(n => btn('n', n, n === 999 ? 'Alle (' + total + ')' : n, cur === n || (n !== 999 && S.n === n) ? 'sel' : '')).join('') + '</div><p class="hint">Neue und falsch beantwortete Aufgaben kommen zuerst.</p></div>' +
+    '<div>' + btn('start', undefined, 'Starten · ' + (cur === 999 ? total : Math.min(S.n, total)) + ' Aufgaben →', 'pri') + '</div></div>';
+}
+function vBars() {
+  const log = S.sess.log;
+  const okN = log.filter(x => x.ok).length, badN = log.length - okN, m = Math.max(okN, badN, 1);
+  return '<div class="bars">' + [['ok', 'richtig', okN, 'var(--accent)', 'var(--accent-l)', 'Richtig beantwortet'], ['bad', 'falsch', badN, 'var(--bad)', '#cfd3e5', 'Falsch beantwortet']].map(([k, label, n, color, nc, title]) => {
+    const ws = log.filter(x => (k === 'ok') === !!x.ok).map(x => x.w.fr);
+    return '<div class="bar" data-a="bar" data-v="' + k + '"><div class="pop' + (S.open === k ? ' on' : '') + '"><h6>' + title + '</h6>' + (ws.length ? ws.map(x => '<div>' + esc(x) + '</div>').join('') : '<div class="mute">Noch keine</div>') + '</div>' +
+      '<span class="n" style="color:' + nc + '">' + n + '</span><div class="b" style="height:' + Math.round(n / m * 80) + 'px;background:' + color + '"></div><span class="l">' + label + '</span></div>';
+  }).join('') + '</div>';
+}
+function vPlay() {
+  const s = S.sess; const cur = s.items[s.i]; const w = cur.w, fmt = cur.fmt, fill = fmt === 'fill', sent = fmt === 'sent';
+  const dis = s.checked ? ' disabled' : '';
+  let h = '<div class="col" style="gap:28px;padding-top:8px">';
+  h += '<div class="top">' + btn('quit', undefined, '✕ Zum Menü') + '<div class="prog"><i style="width:' + Math.round(s.i / s.items.length * 100) + '%"></i></div><span class="mute" style="font-size:13px;min-width:48px;text-align:right">' + (s.i + 1) + ' / ' + s.items.length + '</span></div>';
+  h += '<div class="col" style="gap:20px;min-height:240px"><h6 class="acc">' + MODE[fmt].title + '</h6><div class="main">' + esc(promptOf(cur)) + '</div>';
+  h += '<div class="sent">' + (fill && w.before.trim() ? '<span>' + esc(w.before.trim()) + '</span>' : '') +
+    '<input id="ans" class="input' + (fill ? ' sm' : '') + '" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="' + (fill ? '…' : 'Français') + '" value="' + esc(s.val || '') + '"' + dis + '>' +
+    (fill && w.after.trim() ? '<span>' + esc(w.after.trim()) + '</span>' : '') + '</div>';
+  if (!s.checked) h += '<div class="row" style="gap:8px">' + CHARS.map(c => '<button class="btn key" data-a="char" data-v="' + c + '">' + c + '</button>').join('') + '</div>';
+  if (s.checked) {
+    const txt = s.ok ? (sent ? '' : (w.ex ? w.fr + ' · ' + w.ex : '')) : 'Richtig: ' + answerOf(cur) + (!sent && w.note ? ' · ' + w.note : '');
+    h += '<div class="fb" style="box-shadow:0 0 0 1px ' + (s.ok ? 'var(--accent)' : 'var(--mute)') + '"><span class="ic" style="color:' + (s.ok ? 'var(--accent)' : 'var(--mute)') + '">' + (s.ok ? '✓' : '✗') + '</span><div><div style="font-weight:600">' + (s.ok ? 'Richtig' : 'Nicht ganz') + '</div>' + (txt ? '<div style="color:#cfd3e5">' + esc(txt) + '</div>' : '') + '</div></div>';
+  }
+  h += '</div>';
+  h += '<div>' + (s.checked ? btn('next', undefined, (s.i + 1 >= s.items.length ? 'Ergebnis' : 'Weiter') + ' →', 'pri') : btn('check', undefined, 'Prüfen', 'pri')) + '</div>';
+  h += vBars() + '</div>';
+  return h;
+}
+function vResult() {
+  const s = S.sess; const ok = s.log.filter(x => x.ok).length, n = s.log.length, bad = s.log.filter(x => !x.ok);
+  return '<div class="col" style="gap:24px;padding-top:20px"><h6 class="acc">' + esc(s.label) + '</h6>' +
+    '<div class="row" style="align-items:baseline;gap:14px"><span class="score">' + ok + '</span><span class="mute" style="font-size:22px">/ ' + n + '</span></div>' +
+    '<p style="color:#cfd3e5">' + (ok === n ? 'Alles richtig.' : ok / n >= 0.7 ? 'Gut. Die Fehler unten kurz wiederholen.' : 'Die Fehler unten noch einmal üben.') + '</p>' +
+    (bad.length ? '<div class="card col" style="gap:4px"><h6 style="margin-bottom:6px">Zum Wiederholen</h6>' + bad.map(x => '<div class="mr"><span>' + esc(promptOf(x)) + '</span><span>' + esc(x.fmt === 'sent' ? x.w.ex : x.w.fr) + '</span></div>').join('') + '</div>' : '') +
+    '<div class="row">' + (bad.length ? btn('retry', undefined, '↺ Fehler wiederholen', 'pri') : '') + btn('again', undefined, 'Neue Runde') + btn('home', undefined, 'Zum Menü', 'ghost') + '</div></div>';
+}
+function vParent() {
+  const st = S.store.words;
+  const rows = MODES.map(f => { let ok = 0, bad = 0; pool(f).forEach(w => { const r = st[keyOf(f, w)]; if (r) { ok += r.ok; bad += r.bad; } }); return '<tr><td>' + MODE[f].title + '</td><td>' + (ok + bad) + '</td><td>' + acc({ ok, bad }) + '</td></tr>'; }).join('');
+  const weak = WORDS.filter(w => MODES.some(f => { const r = st[keyOf(f, w)]; return r && r.bad > 0 && r.bad >= r.ok; }));
+  const hist = S.store.hist.slice(0, 8);
+  return '<div class="col" style="gap:28px;padding-top:8px">' + btn('home', undefined, '← Zurück', 'ghost') + '<h2>Elternbereich</h2>' +
+    '<div class="col" style="gap:10px"><h6>Aufgabenformen</h6><table><thead><tr><th>Form</th><th>Antworten</th><th>Trefferquote</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+    '<div class="col" style="gap:10px"><h6>Schwierige Wörter</h6>' + (weak.length ? '<div class="row" style="gap:8px">' + weak.map(x => '<span class="tag">' + esc(x.fr) + '</span>').join('') + '</div>' : '<p class="mute">Noch keine Fehler erfasst.</p>') + '</div>' +
+    '<div class="col" style="gap:10px"><h6>Letzte Runden</h6>' + (hist.length ? '<table><tbody>' + hist.map(h => '<tr><td>' + new Date(h.t).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }) + '</td><td>' + esc(h.label) + '</td><td>' + h.ok + ' / ' + h.n + '</td></tr>').join('') + '</tbody></table>' : '<p class="mute">Noch keine Runden.</p>') + '</div>' +
+    '<div>' + btn('reset', undefined, '🗑 Ergebnisse zurücksetzen', 'ghost') + '</div></div>';
+}
+function render() {
+  const v = { home: vHome, setup: vSetup, play: vPlay, result: vResult, parent: vParent }[S.screen];
+  const prev = document.getElementById('ans'); const draft = prev && !prev.disabled ? prev.value : null;
+  document.getElementById('app').innerHTML = v();
+  const el = document.getElementById('ans');
+  if (el && !el.disabled) { if (draft) el.value = draft; el.focus(); }
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-a]'); if (!t) return;
+  const a = t.dataset.a, v = t.dataset.v, s = S.sess;
+  switch (a) {
+    case 'home': case 'parent': return go(a);
+    case 'setup': S.fmt = v; return go('setup');
+    case 'quit': return go('home');
+    case 'fmt': S.fmt = v; return render();
+    case 'n': S.n = +v; return render();
+    case 'start': return startMode();
+    case 'start-err': return startErr();
+    case 'check': return check();
+    case 'next': return next();
+    case 'char': { const el = document.getElementById('ans'); if (el && !el.disabled) { el.value += v; el.focus(); } return; }
+    case 'bar': S.open = S.open === v ? null : v; return render();
+    case 'retry': return retry();
+    case 'again': return s.src === 'err' ? startErr() : startMode(s.src);
+    case 'reset': if (confirm('Alle gespeicherten Ergebnisse löschen?')) { S.store = { words: {}, hist: [] }; persist(); render(); } return;
+  }
+});
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' || S.screen !== 'play' || !S.sess) return;
+  if (S.sess.checked) { e.preventDefault(); next(); }
+  else if (e.target && e.target.id === 'ans') check();
+});
+render();
+</script>
+</body>
+</html>
